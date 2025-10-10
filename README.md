@@ -1,3 +1,14 @@
+link:
+https://arxiv.org/pdf/2505.09388
+https://arxiv.org/pdf/2305.13245
+https://arxiv.org/pdf/2412.15115
+https://arxiv.org/pdf/2505.09388
+https://arxiv.org/pdf/2505.09388
+https://arxiv.org/pdf/2104.09864
+https://arxiv.org/abs/2407.06483
+https://github.com/orgs/EleutherAI/repositories
+https://www.alphaxiv.org/abs/2501.12948v1
+
 
 sota-ai/
 ├── README.md
