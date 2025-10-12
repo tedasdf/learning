@@ -1,10 +1,10 @@
 link:
-https://arxiv.org/pdf/2505.09388
-https://arxiv.org/pdf/2305.13245
-https://arxiv.org/pdf/2412.15115
-https://arxiv.org/pdf/2505.09388
-https://arxiv.org/pdf/2505.09388
-https://arxiv.org/pdf/2104.09864
+Qwen3 : https://arxiv.org/pdf/2505.09388
+GPA (group query): https://arxiv.org/pdf/2305.13245
+Qwen 2.5 : https://arxiv.org/pdf/2412.15115
+Roformer (done) :https://arxiv.org/pdf/2104.09864
+Pre-RMSNorm and Pre-CRMSNorm Transformers: Equivalent and Efficient Pre-LN Trabsforners https://arxiv.org/pdf/2305.14858
+
 https://arxiv.org/abs/2407.06483
 https://github.com/orgs/EleutherAI/repositories
 https://www.alphaxiv.org/abs/2501.12948v1
