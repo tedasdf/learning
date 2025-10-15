@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from src.attention.CausalAttention import CausalSelfAttention, AttnConfig
+from .CausalAttention import CausalSelfAttention, AttnConfig
 
 
 
@@ -16,9 +16,11 @@ class GroupedQueryAttention(CausalSelfAttention):
     def __init__(self, cfg: AttnConfig, group_size: int  , output_dim = None):
         super().__init__(cfg, output_dim)
         self.group_size = group_size
+        self.repeat_factor = self.n_head // self.group_size
 
         self.q = nn.Linear(self.d_model, cfg.d_model)
         self.kv = nn.Linear(self.d_model, 2 * self.group_size * self.head_dim)
+
 
     def forward(self, x: torch.Tensor):
         B, T, C = x.size()
@@ -28,7 +30,11 @@ class GroupedQueryAttention(CausalSelfAttention):
         kv = self.kv(x).view(B, T, 2, self.group_size, self.head_dim).transpose(1, 3)
 
         k, v = kv[..., 0, :, :], kv[..., 1, :, :]
-        
+
+       
+        k = k.repeat_interleave(self.repeat_factor, dim=1)
+        v = v.repeat_interleave(self.repeat_factor, dim=1)
+    
         att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
         att = att.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
         att = F.softmax(att, dim=-1)

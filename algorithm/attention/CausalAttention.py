@@ -43,6 +43,8 @@ class CausalSelfAttention(nn.Module):
         qkv = self.qkv(x).view(B, T, 3, self.n_head, self.head_dim).transpose(1, 3)
         q, k, v = qkv[..., 0, :, :], qkv[..., 1, :, :], qkv[..., 2, :, :]
         
+        print(q.shape)
+        print(k.shape)
         att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
         att = att.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
         att = F.softmax(att, dim=-1)
