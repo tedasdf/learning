@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 # t https://github.com/ZixuanJiang/pre-rmsnorm-transformer.
 
 
@@ -25,6 +26,19 @@ class RMSNorm:
         rms = torch.sqrt(torch.mean(x**2, dim=-1, keepdim=True) + self.epsilon)
         return x / rms
 
+
+
+class RMSNorm(nn.Module):
+    def __init__(self, d , eps:float = 1e-6):
+        super().__init__()
+        self.weight = nn.Parameter(torch.ones(d))
+        self.epilson = eps
+    def forward(self, x):
+        input_type = x.dtype
+        x = x.to(torch.float32)
+        var = x.pow(2).mean(-1 , keep_dim=True)
+        x = x * torch.rqst(var + self.epilson)
+        return self.weight * x.to(input_type)
 
 class CRMSNorm:
     ## 

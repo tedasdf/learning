@@ -27,8 +27,12 @@ class CausalSelfAttention(nn.Module):
         
         self.d_model = cfg.d_model
         # Override head_dim and projection layers
-        self.head_dim = self.d_model // cfg.n_head # mutli-head attention
-        self.n_head   = cfg.n_head
+        if cfg.n_head == None:
+            self.n_head = 1
+        else:
+            self.n_head   = cfg.n_head
+            
+        self.head_dim = self.d_model // self.n_head # mutli-head attention
         self.qkv = nn.Linear(self.d_model, 3 * cfg.d_model)
         self.proj = nn.Linear(self.d_model, output_dim)
         self.attn_drop = nn.Dropout(cfg.dropout)
@@ -43,8 +47,6 @@ class CausalSelfAttention(nn.Module):
         qkv = self.qkv(x).view(B, T, 3, self.n_head, self.head_dim).transpose(1, 3)
         q, k, v = qkv[..., 0, :, :], qkv[..., 1, :, :], qkv[..., 2, :, :]
         
-        print(q.shape)
-        print(k.shape)
         att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
         att = att.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
         att = F.softmax(att, dim=-1)
