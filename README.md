@@ -22,6 +22,8 @@ github
 
 
 link:
+Sora - https://arxiv.org/pdf/2402.17177 (https://github.com/hpcaitech/Open-Sora)
+
 Qwen3 : https://arxiv.org/pdf/2505.09388
 GPA (group query): https://arxiv.org/pdf/2305.13245
 Qwen 2.5 : https://arxiv.org/pdf/2412.15115
